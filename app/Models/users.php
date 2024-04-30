@@ -7,7 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class users extends Model
 {
+    public $timestamps = true;
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'role',
+        'password'
+        
+    ];
 
     public function managers(){
         return $this->hasMany(manager::class);
