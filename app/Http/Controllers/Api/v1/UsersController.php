@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Models\users;
-use App\Http\Requests\UpdateusersRequest;
+use App\Http\Requests\v1\UpdateUsersRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\UserResource;
 use App\Http\Resources\v1\UserCollection;
@@ -43,9 +43,9 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateusersRequest $request, users $users)
+    public function update(UpdateUsersRequest $request, users $user)
     {
-        //
+        $user->update($request->all());
     }
 
     /**
