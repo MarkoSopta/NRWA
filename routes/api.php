@@ -21,5 +21,4 @@ Route::group(['prefix'=>'v1','namespace'=>'App\Http\Controllers\Api\v1'],functio
     Route::apiResource('users',UsersController::class);
     Route::apiResource('dispatchers',DispatcherController::class);
     Route::apiResource('managers',ManagerController::class);
-
 });
