@@ -3,9 +3,8 @@
 namespace App\Http\Requests\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class StoreUsersRequest extends FormRequest
+class DispatcherStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +22,7 @@ class StoreUsersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>['required'],
-            'role'=>['required', Rule::in(['manager','dispatcher','client'])],
-            'password'=>['required']
+            'name'=>['required']
         ];
     }
-
 }

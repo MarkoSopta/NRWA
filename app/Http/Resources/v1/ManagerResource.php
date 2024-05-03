@@ -17,7 +17,7 @@ class ManagerResource extends JsonResource
         return [
             'id'=>$this->id,
             'name'=>$this->name,
-            'location_id'=>$this->location_id
+            'locationId'=> $this-> location_id
             ];
     }
 }

@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Models\dispatcher;
-use App\Http\Requests\StoredispatcherRequest;
-use App\Http\Requests\UpdatedispatcherRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\DispatcherResource;
+use App\Http\Resources\v1\DispatcherCollection;
+use App\Http\Requests\v1\DispatcherStoreRequest;
+use App\Http\Requests\v1\DispatcherUpdateRequest;
 
 class DispatcherController extends Controller
 {
@@ -15,23 +16,17 @@ class DispatcherController extends Controller
      */
     public function index()
     {
-        return dispatcher::all();
+        return new DispatcherCollection(dispatcher::paginate());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store()
+    public function store(DispatcherStoreRequest $request)
     {
-        //
+        return new DispatcherResource(dispatcher::create($request->all()));
     }
 
     /**
@@ -42,27 +37,27 @@ class DispatcherController extends Controller
         return new DispatcherResource($dispatcher);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(dispatcher $dispatcher)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatedispatcherRequest $request, dispatcher $dispatcher)
+    public function update(DispatcherUpdateRequest $request, dispatcher $dispatcher)
     {
-        //
+        $dispatcher->update($request->all());
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(dispatcher $dispatcher)
+    public function destroy($id)
     {
-        //
+        $dispatcher = dispatcher::find($id);
+
+  if ($dispatcher) {
+    $dispatcher->delete();
+    return response()->json(['message' => 'Dispatcher deleted successfully'], 200);
+  } else {
+    return response()->json(['error' => 'Dispatcher not found'], 404);
+  }
     }
 }

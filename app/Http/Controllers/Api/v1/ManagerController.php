@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Models\manager;
-use App\Http\Requests\StoremanagerRequest;
-use App\Http\Requests\UpdatemanagerRequest;
+use App\Http\Requests\v1\ManagerStoreRequest;
+use App\Http\Requests\v1\ManagerUpdateRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\ManagerResource;
+use App\Http\Resources\v1\ManagerCollection;
+
 
 class ManagerController extends Controller
 {
@@ -15,23 +17,16 @@ class ManagerController extends Controller
      */
     public function index()
     {
-        return manager::all();
+        return new ManagerCollection(manager::paginate());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
+   
     /**
      * Store a newly created resource in storage.
      */
-    public function store()
+    public function store(ManagerStoreRequest $request)
     {
-        //
+        return new ManagerResource(manager::create($request->all()));
     }
 
     /**
@@ -42,27 +37,31 @@ class ManagerController extends Controller
         return new ManagerResource($manager);    
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(manager $manager)
-    {
-        //
-    }
+   
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatemanagerRequest $request, manager $manager)
+    public function update(ManagerUpdateRequest $request, manager $manager)
     {
-        //
+        
+        $manager->update($request->all());
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(manager $manager)
+    public function destroy($id)
     {
-        //
-    }
+        $manager = manager::find($id);
+
+        if ($manager) {
+          $manager->delete();
+          return response()->json(['message' => 'Manager deleted successfully'], 200);
+        } else {
+          return response()->json(['error' => 'Manager not found'], 404);
+        }
+          }
+    
 }

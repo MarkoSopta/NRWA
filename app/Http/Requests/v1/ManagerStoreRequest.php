@@ -3,9 +3,8 @@
 namespace App\Http\Requests\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class StoreUsersRequest extends FormRequest
+class ManagerStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +23,17 @@ class StoreUsersRequest extends FormRequest
     {
         return [
             'name'=>['required'],
-            'role'=>['required', Rule::in(['manager','dispatcher','client'])],
-            'password'=>['required']
+            'locationId'=>['required']
         ];
     }
 
+    protected function prepareForValidation(){
+
+ $this -> merge([
+     'location_id'=>$this->locationId
+
+ ]);
+
+
+ }
 }
