@@ -16,5 +16,10 @@ protected $fillable = [
     public function users(){
         return $this->belongsTo(users::class);
     }
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
+    }
+    
 
 }
