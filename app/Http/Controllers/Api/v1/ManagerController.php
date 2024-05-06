@@ -17,7 +17,7 @@ class ManagerController extends Controller
      */
     public function index()
     {
-        return new ManagerCollection(manager::paginate());
+        return response()->json(new ManagerCollection(manager::paginate()));
     }
 
    
@@ -26,7 +26,7 @@ class ManagerController extends Controller
      */
     public function store(ManagerStoreRequest $request)
     {
-        return new ManagerResource(manager::create($request->all()));
+        return response()->json(new ManagerResource($request->all()), 201);
     }
 
     /**
@@ -34,7 +34,7 @@ class ManagerController extends Controller
      */
     public function show(manager $manager)
     {
-        return new ManagerResource($manager);    
+      return response()->json(new ManagerResource($manager));   
     }
 
    
@@ -45,7 +45,7 @@ class ManagerController extends Controller
     public function update(ManagerUpdateRequest $request, manager $manager)
     {
         
-        $manager->update($request->all());
+      return response()->json(new ManagerResource(update($request->all())));
 
     }
 
@@ -54,14 +54,15 @@ class ManagerController extends Controller
      */
     public function destroy($id)
     {
-        $manager = manager::find($id);
+      $manager = Manager::find($id);
 
-        if ($manager) {
+      if ($manager) {
           $manager->delete();
           return response()->json(['message' => 'Manager deleted successfully'], 200);
-        } else {
+      } else {
           return response()->json(['error' => 'Manager not found'], 404);
-        }
-          }
-    
+      }
+  }
 }
+    
+
