@@ -7,7 +7,9 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-  
+@auth
+    <button onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</button>
+@endauth
   <div class="container mt-5">
     <h2 class="mb-4">CRUD Table</h2>
     <table class="table table-bordered">
@@ -25,6 +27,19 @@
     </table>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add New</button>
   </div>
+
+
+
+  
+
+
+  @auth
+  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+    <button type="submit">Logout</button>
+</form>
+@endauth
+
 
   <!-- Add Modal -->
   <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
