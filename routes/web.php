@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Auth\LoginController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,3 +40,10 @@ Route::post('/login', function (Request $request) {
     // Authentication failed
     return redirect()->route('login')->with('error', 'Invalid credentials');
 })->name('login.submit');
+
+Route::get('login/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('callback/google', [LoginController::class, 'handleGoogleCallback']);
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/login');
+})->name('logout');

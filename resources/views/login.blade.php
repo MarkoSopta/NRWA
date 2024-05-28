@@ -71,7 +71,9 @@
                 <input type="password" id="password" name="password" required>
             </div>
             <div class="form-group">
-                <input type="submit" value="Login">
+                <input type="submit" value="Login">               
+<a href="{{ route('login.google') }}">Login with Google</a>
+
             </div>
         </form>
     </div>
